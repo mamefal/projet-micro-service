@@ -1,0 +1,26 @@
+server:
+  port: 8087
+
+spring:
+  application:
+    name: gateway
+
+
+  main:
+    web-application-type=reactive:eureka:
+
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
+  cloud:
+    gateway:
+      routes:
+        - id: student-service
+          uri: lb://studentService
+          predicates:
+            - Path=/students/**
+        - id: school-service
+          uri: lb://schoolService
+          predicates:
+            - Path=/schools/**
+
